@@ -2,6 +2,7 @@ package com.asmae.shopsphere.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.asmae.shopsphere.exception.ProductNotFoundException;
 import com.asmae.shopsphere.model.Product;
 import com.asmae.shopsphere.service.ProductService;
 
@@ -36,12 +37,10 @@ public class ProductController {
 
     @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        
         Product product = productService.getProductById(id);
-        if(product ==null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(product);
-        } 
+
+        return ResponseEntity.ok(product);
     }
     
 

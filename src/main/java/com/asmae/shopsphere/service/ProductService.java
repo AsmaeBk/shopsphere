@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.asmae.shopsphere.exception.ProductNotFoundException;
 import com.asmae.shopsphere.model.Product;
 import com.asmae.shopsphere.repository.ProductRepository;
 
@@ -27,7 +28,8 @@ public class ProductService {
     }
 
     public Product getProductById(Long id) {
-        return  productRepo.findById(id).orElse(null);
+        return  productRepo.findById(id).orElseThrow(()->  new ProductNotFoundException(id));
+
     }
 
 }
