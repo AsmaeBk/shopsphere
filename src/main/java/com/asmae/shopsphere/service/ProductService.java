@@ -32,4 +32,18 @@ public class ProductService {
 
     }
 
+    public Product updateProduct(Long id, Product product) {
+        
+        Product existingProduct = productRepo.findById(id)
+        .orElseThrow(() -> new ProductNotFoundException(id));
+
+        existingProduct.setName(product.getName());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setStockQuantity(product.getStockQuantity());
+
+        return productRepo.save(existingProduct);
+
+    }
+
 }

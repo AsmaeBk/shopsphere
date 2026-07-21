@@ -6,6 +6,7 @@ import com.asmae.shopsphere.exception.ProductNotFoundException;
 import com.asmae.shopsphere.model.Product;
 import com.asmae.shopsphere.service.ProductService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -24,7 +27,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/products")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product ) {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product ) {
         Product savedProduct = productService.createProduct(product);
         return ResponseEntity.ok(savedProduct);
     
@@ -43,5 +46,12 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
     
+    @PutMapping("/products/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id,@Valid @RequestBody Product product) {
+
+        Product updateddProduct = productService.updateProduct(id, product);
+        
+        return ResponseEntity.ok(updateddProduct);
+    }
 
 }
