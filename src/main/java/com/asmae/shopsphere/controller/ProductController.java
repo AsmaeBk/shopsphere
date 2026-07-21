@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,6 @@ public class ProductController {
     public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product ) {
         Product savedProduct = productService.createProduct(product);
         return ResponseEntity.ok(savedProduct);
-    
     }
     
     @GetMapping("/products")
@@ -52,6 +52,12 @@ public class ProductController {
         Product updateddProduct = productService.updateProduct(id, product);
         
         return ResponseEntity.ok(updateddProduct);
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

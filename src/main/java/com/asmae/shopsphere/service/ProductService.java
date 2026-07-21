@@ -46,4 +46,10 @@ public class ProductService {
 
     }
 
+    public void deleteProduct(Long id) {
+
+        Product existingProduct = productRepo.findById(id).orElseThrow(()-> new ProductNotFoundException(id));
+        productRepo.delete(existingProduct) ;
+    }
+
 }
