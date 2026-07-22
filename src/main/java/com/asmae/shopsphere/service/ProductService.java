@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import com.asmae.shopsphere.exception.ProductNotFoundException;
 import com.asmae.shopsphere.model.Product;
 import com.asmae.shopsphere.repository.ProductRepository;
@@ -59,5 +58,17 @@ public class ProductService {
         Page<Product> products = productRepo.findAll(pageable);
         return products;
     }
+
+    // public List<Product> searchByName(String name) {
+    //     List<Product> products = productRepo.findProductsByName(name).orElseThrow(()->new ProductNotFoundByNameException(name));
+
+    //     return products;
+    // }
+
+    public List<Product> searchByName(String name, Pageable pageable) {
+        return productRepo.findByNameContainingIgnoreCase(name, pageable);
+
+    }
+
 
 }
