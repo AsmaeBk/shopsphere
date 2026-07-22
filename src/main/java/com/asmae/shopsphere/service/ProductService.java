@@ -2,6 +2,8 @@ package com.asmae.shopsphere.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.asmae.shopsphere.exception.ProductNotFoundException;
@@ -50,6 +52,12 @@ public class ProductService {
 
         Product existingProduct = productRepo.findById(id).orElseThrow(()-> new ProductNotFoundException(id));
         productRepo.delete(existingProduct) ;
+    }
+
+    public Page<Product> getProducts(Pageable pageable) {
+       
+        Page<Product> products = productRepo.findAll(pageable);
+        return products;
     }
 
 }
