@@ -20,38 +20,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@JsonPropertyOrder({
-    "id",
-    "name",
-    "description",
-    "price",
-    "stockQuantity"
-})
-public class Product {
+@AllArgsConstructor
+public class ProductResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String name;
 
-    @Length(max = 1000, message = "The text must not exceed 1000 characters")
     private String description;
 
-    @Positive
     private BigDecimal price;
 
-    @Min(0)
     private Integer stockQuantity;
 
-    @ManyToOne
-    @JoinColumn(name="category_id")
-    private Category category;
-    
+    private String categoryName;
 }

@@ -11,6 +11,8 @@ import com.asmae.shopsphere.exception.CategoryNotFoundException;
 import com.asmae.shopsphere.exception.ProductNotFoundException;
 import com.asmae.shopsphere.model.Category;
 import com.asmae.shopsphere.model.Product;
+import com.asmae.shopsphere.model.ProductRequest;
+import com.asmae.shopsphere.model.ProductResponse;
 import com.asmae.shopsphere.repository.CategoryRepository;
 import com.asmae.shopsphere.repository.ProductRepository;
 
@@ -23,37 +25,55 @@ public class ProductService {
     private final ProductRepository productRepo ;
 
     private final CategoryRepository categoryRepository;
-    public Product createProduct(Product product) {
+    public ProductResponse createProduct( ProductRequest  product) {
 
-        Category cat = categoryRepository.findById(product.getCategory().getId())
-                            .orElseThrow(()->new CategoryNotFoundException(product.getCategory().getId()));
+        Category cat = categoryRepository.findById(product.getCategoryId())
+                            .orElseThrow(()->new CategoryNotFoundException(product.getCategoryId()));
 
-        product.setCategory(cat);
+        Product newProduct = Product.builder()
+                            .name(product.getName())
+                            .description(product.getDescription())
+                            .price(product.getPrice())
+                            .stockQuantity(product.getStockQuantity())
+                            .category(cat)
+                            .build();
+
+
+        Product saved = productRepo.save(newProduct);
+
+        return toResponse(saved);
         
-        return productRepo.save(product);
-        
     }
 
-    public List<Product> getAllProducts() {
-        return productRepo.findAll();
+    public List<ProductResponse> getAllProducts() {
+
+        List<Product> products = productRepo.findAll();
+
+        return products.stream()
+        .map(prod->toResponse(prod))
+        .toList();
     }
 
-    public Product getProductById(Long id) {
-        return  productRepo.findById(id).orElseThrow(()->  new ProductNotFoundException(id));
+    public ProductResponse getProductById(Long id) {
+       Product product =  productRepo.findById(id).orElseThrow(()->  new ProductNotFoundException(id));
+       return toResponse(product);
 
     }
 
-    public Product updateProduct(Long id, Product product) {
+    public ProductResponse updateProduct(Long id, ProductRequest product) {
         
         Product existingProduct = productRepo.findById(id)
         .orElseThrow(() -> new ProductNotFoundException(id));
-
+        Category category = categoryRepository.findById(product.getCategoryId()).orElseThrow(()-> new CategoryNotFoundException(product.getCategoryId()));
         existingProduct.setName(product.getName());
         existingProduct.setDescription(product.getDescription());
         existingProduct.setPrice(product.getPrice());
         existingProduct.setStockQuantity(product.getStockQuantity());
+        existingProduct.setCategory(category);
 
-        return productRepo.save(existingProduct);
+        Product savedProduct =  productRepo.save(existingProduct);
+
+        return toResponse(savedProduct);
 
     }
 
@@ -63,9 +83,9 @@ public class ProductService {
         productRepo.delete(existingProduct) ;
     }
 
-    public Page<Product> getProducts(Pageable pageable) {
-       
-        return productRepo.findAll(pageable);
+    public Page<ProductResponse> getProducts(Pageable pageable) {
+        Page<Product> products = productRepo.findAll(pageable);
+        return products.map(prod ->this.toResponse(prod));
     }
 
     // public List<Product> searchByName(String name) {
@@ -74,10 +94,21 @@ public class ProductService {
     //     return products;
     // }
 
-    public List<Product> searchByName(String name, Pageable pageable) {
-        return productRepo.findByNameContainingIgnoreCase(name, pageable);
+    public List<ProductResponse> searchByName(String name, Pageable pageable) {
+        List<Product> products =   productRepo.findByNameContainingIgnoreCase(name, pageable);
+
+        return products.stream().map(product->toResponse(product)).toList();
 
     }
 
-
+    private ProductResponse toResponse(Product product) {
+         return ProductResponse.builder()
+            .id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .stockQuantity(product.getStockQuantity())
+                .categoryName(product.getCategory() !=  null ? product.getCategory().getName() : null)
+                .build();
+    }
 }

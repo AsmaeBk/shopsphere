@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.asmae.shopsphere.service.CategoryService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -23,12 +24,11 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/categories")
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
 
         Category newCategory = categoryService.createCategory(category);
         return ResponseEntity.ok(newCategory);
     }
-    
 
     @GetMapping("/categories")
     public List<Category> getAllCategories() {

@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.asmae.shopsphere.exception.ProductNotFoundException;
 import com.asmae.shopsphere.model.Product;
+import com.asmae.shopsphere.model.ProductRequest;
+import com.asmae.shopsphere.model.ProductResponse;
 import com.asmae.shopsphere.service.ProductService;
 
 import jakarta.validation.Valid;
@@ -30,30 +32,29 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/products")
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product ) {
-        Product savedProduct = productService.createProduct(product);
-        return ResponseEntity.ok(savedProduct);
+    public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody ProductRequest product ) {   
+        return ResponseEntity.ok(productService.createProduct(product));
     }
     
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
+    public List<ProductResponse> getAllProducts() {
         return productService.getAllProducts();
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id) {
         
-        Product product = productService.getProductById(id);
+        ProductResponse product = productService.getProductById(id);
 
         return ResponseEntity.ok(product);
     }
     
     @PutMapping("/products/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id,@Valid @RequestBody Product product) {
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id,@Valid @RequestBody ProductRequest product) {
 
-        Product updateddProduct = productService.updateProduct(id, product);
+        ProductResponse updatedProduct = productService.updateProduct(id, product);
         
-        return ResponseEntity.ok(updateddProduct);
+        return ResponseEntity.ok(updatedProduct);
     }
 
     @DeleteMapping("/products/{id}")
@@ -63,17 +64,13 @@ public class ProductController {
     }
 
     @GetMapping("/products-by-page")
-    public Page<Product> getProducts(
-        Pageable pageable
-        
-        ) {
+    public Page<ProductResponse> getProducts(Pageable pageable ) {
             return productService.getProducts(pageable);
     }
 
     @GetMapping("/products/search")
-    public ResponseEntity<List<Product>> searchProductsByName(@RequestParam String name, Pageable pageable) {
-        System.out.println(name);
-        List<Product> searchedProduct = productService.searchByName(name, pageable);
+    public ResponseEntity<List<ProductResponse>> searchProductsByName(@RequestParam String name, Pageable pageable) {
+        List<ProductResponse> searchedProduct = productService.searchByName(name, pageable);
         return ResponseEntity.ok(searchedProduct);
     }
     

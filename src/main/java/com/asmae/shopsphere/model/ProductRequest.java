@@ -15,28 +15,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Entity
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@JsonPropertyOrder({
-    "id",
-    "name",
-    "description",
-    "price",
-    "stockQuantity"
-})
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class ProductRequest {
 
     @NotBlank
     private String name;
@@ -50,8 +32,6 @@ public class Product {
     @Min(0)
     private Integer stockQuantity;
 
-    @ManyToOne
-    @JoinColumn(name="category_id")
-    private Category category;
+    private Long categoryId;
     
 }
