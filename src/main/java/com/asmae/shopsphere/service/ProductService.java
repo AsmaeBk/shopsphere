@@ -2,11 +2,16 @@ package com.asmae.shopsphere.service;
 
 import java.util.List;
 
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.asmae.shopsphere.exception.CategoryNotFoundException;
 import com.asmae.shopsphere.exception.ProductNotFoundException;
+import com.asmae.shopsphere.model.Category;
 import com.asmae.shopsphere.model.Product;
+import com.asmae.shopsphere.repository.CategoryRepository;
 import com.asmae.shopsphere.repository.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,11 +22,16 @@ public class ProductService {
 
     private final ProductRepository productRepo ;
 
+    private final CategoryRepository categoryRepository;
     public Product createProduct(Product product) {
 
-        productRepo.save(product);
+        Category cat = categoryRepository.findById(product.getCategory().getId())
+                            .orElseThrow(()->new CategoryNotFoundException(product.getCategory().getId()));
+
+        product.setCategory(cat);
         
-        return product;
+        return productRepo.save(product);
+        
     }
 
     public List<Product> getAllProducts() {
@@ -55,8 +65,7 @@ public class ProductService {
 
     public Page<Product> getProducts(Pageable pageable) {
        
-        Page<Product> products = productRepo.findAll(pageable);
-        return products;
+        return productRepo.findAll(pageable);
     }
 
     // public List<Product> searchByName(String name) {
