@@ -1,8 +1,9 @@
 package com.asmae.shopsphere.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-
+import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -110,5 +111,30 @@ public class ProductService {
                 .stockQuantity(product.getStockQuantity())
                 .categoryName(product.getCategory() !=  null ? product.getCategory().getName() : null)
                 .build();
+    }
+
+    public List<ProductResponse> getProductsByName(String categoryName) {
+    
+        List<Product> products = productRepo.findAllByCategoryName(categoryName);
+        
+        return products.stream()
+                .map(prod->toResponse(prod))
+                .toList();
+    }
+
+    public List<ProductResponse> getProductsByPriceRange(BigDecimal min, BigDecimal max) {
+        
+        List<Product> products = productRepo.findProductsBetweenPrices(min, max);
+
+        return products.stream().map(prod->toResponse(prod)).toList();
+    }
+
+    public List<ProductResponse> searcgProductsByCategoryAndName(String categoryName, String productName) {
+
+        List<Product> products = productRepo.searcgProductsByCategoryAndName(categoryName, productName);
+        
+        return products.stream()
+                .map(prod->toResponse(prod))
+                .toList();
     }
 }

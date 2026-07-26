@@ -11,6 +11,7 @@ import com.asmae.shopsphere.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -72,6 +73,24 @@ public class ProductController {
     public ResponseEntity<List<ProductResponse>> searchProductsByName(@RequestParam String name, Pageable pageable) {
         List<ProductResponse> searchedProduct = productService.searchByName(name, pageable);
         return ResponseEntity.ok(searchedProduct);
+    }
+    
+    @GetMapping("/products/category")
+    public ResponseEntity<List<ProductResponse>> getProductsByCategory(@RequestParam("name") String categoryName) {
+       return ResponseEntity.ok(productService.getProductsByName(categoryName));
+
+    }
+
+    @GetMapping("/products/price")
+    public ResponseEntity<List<ProductResponse>> getProductsByPriceRange(@RequestParam BigDecimal min, @RequestParam BigDecimal max) {
+       return ResponseEntity.ok(productService.getProductsByPriceRange(min, max));
+
+    }
+
+    @GetMapping("/products/search-by-name-category")
+    public ResponseEntity<List<ProductResponse>> searchProductsByCategoryAndName(@RequestParam("category") String categoryName, @RequestParam("name") String productName) {
+       return ResponseEntity.ok(productService.searcgProductsByCategoryAndName(categoryName, productName));
+
     }
     
 }
