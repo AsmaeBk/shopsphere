@@ -1,6 +1,8 @@
 package com.asmae.shopsphere.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -12,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -53,5 +56,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderItem> items = new ArrayList<>();
     
 }
