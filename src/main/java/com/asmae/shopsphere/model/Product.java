@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import jakarta.persistence.Entity;
@@ -55,6 +58,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name="category_id")
+    @JsonBackReference
     private Category category;
 
     @OneToMany(mappedBy = "product")

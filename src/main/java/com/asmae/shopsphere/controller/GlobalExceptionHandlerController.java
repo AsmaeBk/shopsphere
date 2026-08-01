@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.asmae.shopsphere.exception.CategoryNotFoundException;
 import com.asmae.shopsphere.exception.ProductNotFoundException;
+import com.asmae.shopsphere.exception.UserAlreadyExistsException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandlerController {
@@ -21,6 +22,12 @@ public class GlobalExceptionHandlerController {
     @ExceptionHandler(CategoryNotFoundException.class)
     public String handleCategoryNotFoundException(CategoryNotFoundException cexc) {
         return cexc.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public String handleUserAlreadyExistsException(UserAlreadyExistsException uexc) {
+        return uexc.getMessage();
     }
 
 }
