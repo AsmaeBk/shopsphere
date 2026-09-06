@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import com.asmae.shopsphere.exception.UserAlreadyExistsException;
 import com.asmae.shopsphere.model.User;
 import com.asmae.shopsphere.model.User.Role;
-import com.asmae.shopsphere.model.AuthenticationResponse;
-import com.asmae.shopsphere.model.LoginRequest;
-import com.asmae.shopsphere.model.RegisterRequest;
-import com.asmae.shopsphere.model.UserResponse;
+import com.asmae.shopsphere.dto.AuthenticationResponse;
+import com.asmae.shopsphere.dto.LoginRequest;
+import com.asmae.shopsphere.dto.RegisterRequest;
+import com.asmae.shopsphere.dto.UserResponse;
 import com.asmae.shopsphere.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;

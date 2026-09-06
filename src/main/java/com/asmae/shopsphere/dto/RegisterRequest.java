@@ -1,4 +1,4 @@
-package com.asmae.shopsphere.model;
+package com.asmae.shopsphere.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -3,8 +3,8 @@ package com.asmae.shopsphere.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asmae.shopsphere.model.Order;
-import com.asmae.shopsphere.model.OrderRequest;
-import com.asmae.shopsphere.model.OrderResponse;
+import com.asmae.shopsphere.dto.OrderRequest;
+import com.asmae.shopsphere.dto.OrderResponse;
 import com.asmae.shopsphere.service.OrderService;
 
 import jakarta.validation.Valid;

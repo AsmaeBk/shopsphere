@@ -1,4 +1,4 @@
-package com.asmae.shopsphere.model;
+package com.asmae.shopsphere.dto;
 
 import java.util.ArrayList;
 import java.util.List;

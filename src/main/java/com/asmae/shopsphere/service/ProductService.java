@@ -12,8 +12,8 @@ import com.asmae.shopsphere.exception.CategoryNotFoundException;
 import com.asmae.shopsphere.exception.ProductNotFoundException;
 import com.asmae.shopsphere.model.Category;
 import com.asmae.shopsphere.model.Product;
-import com.asmae.shopsphere.model.ProductRequest;
-import com.asmae.shopsphere.model.ProductResponse;
+import com.asmae.shopsphere.dto.ProductRequest;
+import com.asmae.shopsphere.dto.ProductResponse;
 import com.asmae.shopsphere.repository.CategoryRepository;
 import com.asmae.shopsphere.repository.ProductRepository;
 

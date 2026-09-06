@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.asmae.shopsphere.exception.ProductNotFoundException;
 import com.asmae.shopsphere.model.Product;
-import com.asmae.shopsphere.model.ProductRequest;
-import com.asmae.shopsphere.model.ProductResponse;
+import com.asmae.shopsphere.dto.ProductRequest;
+import com.asmae.shopsphere.dto.ProductResponse;
 import com.asmae.shopsphere.service.ProductService;
 
 import jakarta.validation.Valid;

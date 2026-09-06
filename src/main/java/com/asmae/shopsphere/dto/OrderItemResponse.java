@@ -1,4 +1,4 @@
-package com.asmae.shopsphere.model;
+package com.asmae.shopsphere.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
